@@ -53,8 +53,9 @@ DEFAULT_PITCH = 1500
 DEFAULT_THROTTLE = 900  # throttle bellow a certain value disarms the FC
 DEFAULT_YAW = 1500
 
-TAKEOFF = 1300
+TAKEOFF = 1550
 LAND = 900
+HOVER = 1500
 
 MIN_CMD_ROLL = 1250
 MIN_CMD_PITCH = 1250
@@ -243,7 +244,7 @@ class PS4GamepadManager:
                     vz += trigger_to_positive_vz(az, deadband=self.deadband)
                     vz += trigger_to_negative_vz(arz, deadband=self.deadband)
                     ts = time.time()
-                    CMDS['throttle'] += vz * (ts - self.ts)
+                    CMDS['throttle'] += vz  # * (ts - self.ts)
                     flight_command = None
                     self.ts = ts
                 elif self.mode == 2:  # override flight command
@@ -1203,7 +1204,7 @@ class CogniflyController:
                     w_target = self.pid_w_z(yaw_rate) if w != 0 else 0
                     self.CMDS['pitch'] = DEFAULT_PITCH + x_target
                     self.CMDS['roll'] = DEFAULT_ROLL + y_target
-                    self.CMDS['throttle'] = self.CMDS['throttle'] + z_target
+                    self.CMDS['throttle'] = HOVER + z_target
                     self.CMDS['yaw'] = DEFAULT_YAW + w_target
             elif self.current_flight_command[0] == "PWF":  # position command
                 # command is ["PWF", x, y, z, yaw, vel_norm_goal, w_norm_goal, duration]
@@ -1279,7 +1280,7 @@ class CogniflyController:
                     w_target = self.pid_w_z(yaw_rate) if w != 0 else 0
                     self.CMDS['pitch'] = DEFAULT_PITCH + x_target
                     self.CMDS['roll'] = DEFAULT_ROLL + y_target
-                    self.CMDS['throttle'] = self.CMDS['throttle'] + z_target
+                    self.CMDS['throttle'] = HOVER + z_target
                     self.CMDS['yaw'] = DEFAULT_YAW + w_target
             elif self.current_flight_command[0] in ("PDF", "PDZ"):  # position command drone frame
                 # command is ["PDF", x, y, z, yaw, vel_norm_goal, w_norm_goal, duration]
