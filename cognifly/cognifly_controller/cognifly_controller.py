@@ -761,7 +761,7 @@ class CogniflyController:
             self._send_cmds(board)
 
     def _complete_arming(self, board):
-        self.CMDS['aux2'] = NAV_ALTHOLD_MODE
+        self.CMDS['aux2'] = NAV_POSHOLD_MODE
         self._send_cmds(board)
         self._armed = True
         self._arming = False
@@ -814,14 +814,14 @@ class CogniflyController:
                     max_duration = command[2][3]
                     max_velocity = command[2][4]
                     self.CMDS["throttle"] = alt  # TODO: replace by true altitude (now a throttle value)
-                    self.CMDS["aux2"] = NAV_ALTHOLD_MODE
+                    self.CMDS["aux2"] = NAV_POSHOLD_MODE
                     if track_xy:
                         self.current_flight_command = ["PDF", 0.0, 0.0, None, None, max_velocity, 0.0, time.time() + max_duration]
                     else:
                         self.current_flight_command = None
                 elif command[2][0] == "LAND":
                     self.CMDS["throttle"] = LAND
-                    self.CMDS["aux2"] = NAV_ALTHOLD_MODE
+                    self.CMDS["aux2"] = NAV_POSHOLD_MODE
                     self.current_flight_command = None
                 elif command[2][0] in ("VDF", "VWF"):  # velocity
                     self.current_flight_command = [command[2][0], command[2][1], command[2][2], command[2][3], command[2][4], time.time() + command[2][5]]
