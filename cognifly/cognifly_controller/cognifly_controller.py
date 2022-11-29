@@ -60,13 +60,13 @@ HOVER = 1500
 MIN_CMD_ROLL = 1250
 MIN_CMD_PITCH = 1250
 MIN_CMD_THROTTLE = 1000  # throttle bellow a certain value disarms the FC
-MIN_CMD_V_Z = -20
+MIN_CMD_V_Z = -200
 MIN_CMD_YAW = 1250
 MAX_CMD_ROLL = 1750
 MAX_CMD_PITCH = 1750
 MAX_CMD_THROTTLE = 2000
 MAX_CMD_YAW = 1750
-MAX_CMD_V_Z = 20
+MAX_CMD_V_Z = 200
 
 KEY_N_ROLL = 1350
 KEY_N_PITCH = 1350
@@ -244,7 +244,7 @@ class PS4GamepadManager:
                     vz += trigger_to_positive_vz(az, deadband=self.deadband)
                     vz += trigger_to_negative_vz(arz, deadband=self.deadband)
                     ts = time.time()
-                    CMDS['throttle'] += vz  # * (ts - self.ts)
+                    CMDS['throttle'] = HOVER + vz  # * (ts - self.ts)
                     flight_command = None
                     self.ts = ts
                 elif self.mode == 2:  # override flight command
