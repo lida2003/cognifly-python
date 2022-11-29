@@ -244,7 +244,8 @@ class PS4GamepadManager:
                     vz += trigger_to_positive_vz(az, deadband=self.deadband)
                     vz += trigger_to_negative_vz(arz, deadband=self.deadband)
                     ts = time.time()
-                    CMDS['throttle'] = HOVER + vz  # * (ts - self.ts)
+                    if not z_wait:
+                        CMDS['throttle'] = HOVER + vz  # * (ts - self.ts)
                     flight_command = None
                     self.ts = ts
                 elif self.mode == 2:  # override flight command
