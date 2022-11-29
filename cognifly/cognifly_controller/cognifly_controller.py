@@ -59,7 +59,7 @@ HOVER = 1500
 
 MIN_CMD_ROLL = 1250
 MIN_CMD_PITCH = 1250
-MIN_CMD_THROTTLE = 1450  # throttle bellow a certain value disarms the FC
+MIN_CMD_THROTTLE = 900  # throttle bellow a certain value disarms the FC
 MIN_CMD_V_Z = -10
 MIN_CMD_YAW = 1250
 MAX_CMD_ROLL = 1750
